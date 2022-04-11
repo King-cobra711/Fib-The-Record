@@ -1,9 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  showSuccessMessage,
-  showErrorMessage,
-  showFIBMessage,
-} from "./components/alerts/alerts";
+import { showErrorMessage, showFIBMessage } from "./components/alerts/alerts";
 import FadeIn from "react-fade-in";
 
 // Components
@@ -33,10 +29,9 @@ function App() {
   const [gameOver, setGameOver] = useState(false);
   const [alerts, setAlerts] = useState({
     error: "",
-    success: "",
     FIB: "",
   });
-  const { error, success, FIB } = alerts;
+  const { error, FIB } = alerts;
   //
 
   // functions
@@ -76,10 +71,6 @@ function App() {
     }
   };
 
-  // const handleChangeInput = (e) => {
-  //   setUserNum(Number(e.target.value));
-  // };
-
   // https://stackoverflow.com/questions/62900377/why-is-react-setstate-hook-not-updating-immediately
   const handleChangeArray = (e) => {
     e.preventDefault();
@@ -90,27 +81,23 @@ function App() {
       if (fibCheck(Number(userNum))) {
         setAlerts({
           error: "",
-          success: "",
           FIB: "FIB",
         });
         setTimeout(() => {
           setAlerts({
             error: "",
-            success: "",
             FIB: "",
           });
         }, 500);
       } else {
         setAlerts({
           error: "",
-          success: "",
           FIB: "",
         });
       }
     } else {
       setAlerts({
         error: "No number added",
-        success: "",
         FIB: "",
       });
     }
@@ -128,7 +115,6 @@ function App() {
       setGameStart(true);
       setTimerOn(true);
       setAlerts({
-        success: "",
         error: "",
         FIB: "",
       });
@@ -184,7 +170,6 @@ function App() {
     setcountUnique({});
     setAlerts({
       error: "",
-      success: "",
       FIB: "",
     });
     setGameOver(true);
