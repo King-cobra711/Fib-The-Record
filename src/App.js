@@ -291,7 +291,7 @@ function App() {
           <div className="row">
             <div className="col-sm-10 m-auto">
               <img
-                src="/images/FibGif.gif"
+                src="./images/fibgif.gif"
                 style={{ width: "400px", marginTop: "1em" }}
                 alt="FibGif"
               />
