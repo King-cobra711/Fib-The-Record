@@ -83,7 +83,8 @@ function App() {
   // https://stackoverflow.com/questions/62900377/why-is-react-setstate-hook-not-updating-immediately
   const handleChangeArray = (e) => {
     e.preventDefault();
-    const userNum = document.getElementById("userNum").value;
+    let userNum = document.getElementById("userNum").value;
+    userNum = userNum.replace(/\b0+/g, "");
     if (userNum !== "") {
       setUserArray([...userArray, userNum]);
       if (fibCheck(Number(userNum))) {
@@ -118,8 +119,9 @@ function App() {
 
   const handleTime = (e) => {
     e.preventDefault();
-    const time = document.getElementById("time").value;
+    let time = document.getElementById("time").value;
     const validate = /^\d+$/;
+    time = time.replace(/\b0+/g, "");
     if (validate.test(time)) {
       setRefreshTimer(time);
       setUpdateTime(!updateTime);
@@ -267,7 +269,7 @@ function App() {
                             <div className="input-group-append">
                               <button
                                 className="btn btn-outline-secondary"
-                                type="button"
+                                type="submit"
                                 // onClick={handleChangeArray}
                               >
                                 Add
