@@ -81,7 +81,8 @@ function App() {
   // };
 
   // https://stackoverflow.com/questions/62900377/why-is-react-setstate-hook-not-updating-immediately
-  const handleChangeArray = () => {
+  const handleChangeArray = (e) => {
+    e.preventDefault();
     const userNum = document.getElementById("userNum").value;
     if (userNum !== "") {
       setUserArray([...userArray, userNum]);
@@ -115,7 +116,8 @@ function App() {
     document.getElementById("userNum").value = "";
   };
 
-  const handleTime = () => {
+  const handleTime = (e) => {
+    e.preventDefault();
     const time = document.getElementById("time").value;
     const validate = /^\d+$/;
     if (validate.test(time)) {
@@ -221,24 +223,23 @@ function App() {
                 </p>
               </div>
               <div className="col-sm-6 m-auto">
-                <div className="input-group mb-3">
-                  <input
-                    id="time"
-                    type="number"
-                    className="form-control"
-                    placeholder="Time (seconds)"
-                    aria-describedby="basic-addon2"
-                  />
-                  <div className="input-group-append">
-                    <button
-                      className="btn btn-outline-primary"
-                      type="button"
-                      onClick={handleTime}
-                    >
-                      {gameStart ? "Update" : "Play"}
-                    </button>
+                <form onSubmit={handleTime}>
+                  <div className="input-group mb-3">
+                    <input
+                      id="time"
+                      type="number"
+                      className="form-control"
+                      placeholder="Time (seconds)"
+                      aria-describedby="basic-addon2"
+                    />
+                    <div className="input-group-append">
+                      <button className="btn btn-outline-primary" type="submit">
+                        {gameStart ? "Update" : "Play"}
+                      </button>
+                    </div>
                   </div>
-                </div>
+                </form>
+
                 {gameStart ? "" : error && showErrorMessage(error)}
               </div>
             </div>
@@ -254,24 +255,26 @@ function App() {
                   <div className="card-header pb-0">
                     <div className="row">
                       <div className="col-6">
-                        <div className="input-group mb-3">
-                          <input
-                            id="userNum"
-                            type="number"
-                            className="form-control"
-                            placeholder="Add a number!"
-                            aria-describedby="basic-addon2"
-                          />
-                          <div className="input-group-append">
-                            <button
-                              className="btn btn-outline-secondary"
-                              type="button"
-                              onClick={handleChangeArray}
-                            >
-                              Add
-                            </button>
+                        <form onSubmit={handleChangeArray}>
+                          <div className="input-group mb-3">
+                            <input
+                              id="userNum"
+                              type="number"
+                              className="form-control"
+                              placeholder="Add a number!"
+                              aria-describedby="basic-addon2"
+                            />
+                            <div className="input-group-append">
+                              <button
+                                className="btn btn-outline-secondary"
+                                type="button"
+                                // onClick={handleChangeArray}
+                              >
+                                Add
+                              </button>
+                            </div>
                           </div>
-                        </div>
+                        </form>
                       </div>
                       <div className="col-6">
                         <Timer
