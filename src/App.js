@@ -61,12 +61,14 @@ function App() {
 
   // The default radix for parseInt is 10 so any number will be rounded
   const perfectSquare = (n) => {
+    console.log("this is n :", n);
     let s = parseInt(Math.sqrt(n));
+    console.log("This is s", s);
     return s * s === n;
   };
 
   const fibCheck = (n) => {
-    if (n && n <= fibonacci(fibRange)) {
+    if (n <= fibonacci(fibRange)) {
       return perfectSquare(5 * n * n + 4) || perfectSquare(5 * n * n - 4);
     }
   };
@@ -75,7 +77,11 @@ function App() {
   const handleChangeArray = (e) => {
     e.preventDefault();
     let userNum = document.getElementById("userNum").value;
-    userNum = userNum.replace(/\b0+/g, "");
+
+    if (userNum !== "0") {
+      userNum = userNum.replace(/\b0+/g, "");
+    }
+
     if (userNum !== "") {
       setUserArray([...userArray, userNum]);
       if (fibCheck(Number(userNum))) {
