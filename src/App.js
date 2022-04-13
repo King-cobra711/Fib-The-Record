@@ -75,7 +75,7 @@ function App() {
   const handleChangeArray = (e) => {
     e.preventDefault();
     let userNum = document.getElementById("userNum").value;
-    userNum = userNum.replace(/\b0+/g, "");
+    userNum = userNum.length > 1 && userNum.replace(/\b0+/g, "");
     if (userNum !== "") {
       setUserArray([...userArray, userNum]);
       if (fibCheck(Number(userNum))) {
