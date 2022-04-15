@@ -28,7 +28,7 @@ export default function Timer({
   // useEffect
   useEffect(() => {
     let interval = null;
-    // check if the user has submitted a new refresh time and then updates the timer.
+    // check if the user has submitted a new refresh time and then updates the timer. Not required for this assessment but I like it.
     if (updateTime) {
       setSeconds(refreshTimer);
       setUpdateTime(false);
