@@ -162,16 +162,20 @@ function App() {
     document.getElementById("time").value = "";
   };
 
-  //
+  //get all the values the user input stores them in an object.
+  // The keys of the object are the unique input values and the values of the object are the frequency they occur.
   const count = () => {
+    // temp variable
     const counts = {};
     userArray.forEach((x) => {
       counts[x] = (counts[x] || 0) + 1;
     });
+    // update the state
     setcountUnique(counts);
   };
   // DISPLAY THEM
 
+  // puts all the keys of the countUnique object into an array and sorts them from highest to lowest then maps through this array of keys and returns a list item with "{key} : {value for that key}"
   const displayResults = () =>
     Object.keys(countUnique)
       .sort((a, b) => {
@@ -185,6 +189,7 @@ function App() {
         );
       });
 
+  // reset the state
   const endGame = () => {
     setTimerOn(false);
     setRefreshTimer(null);
@@ -199,6 +204,7 @@ function App() {
       FIB: "",
     });
     setGameOver(true);
+    // shows the "Thanks for playing message" for 5 seconds
     setTimeout(() => {
       setGameOver(false);
     }, 5000);
