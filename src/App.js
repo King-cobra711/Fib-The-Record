@@ -15,7 +15,6 @@ function App() {
   // STATE
 
   // timer state
-
   const [timerOn, setTimerOn] = useState(false);
   const [refreshTimer, setRefreshTimer] = useState(null);
   const [refresh, setRefresh] = useState(false);
@@ -36,13 +35,12 @@ function App() {
 
   // functions
 
-  // https://www.mygreatlearning.com/blog/why-is-time-complexity-essential/#:~:text=Time%20complexity%20is%20the%20amount,of%20code%20in%20an%20algorithm.
+  // The fibonacci function will find the 'nth' number of the fibonacci sequence. for example, fibonacci(10) will return 55.
+  // This function is not required for this assessment, I just thought it was cool.
+  // If you are worried about space/time complexities and want to save your program from computing this, just google the 1000th number of the fibonacci sequence (354,224,848,179,261,915,075) and use that in the fibCheck function instead.
 
-  // https://learnersbucket.com/examples/algorithms/program-to-find-the-nth-fibonacci-number/
-
-  //To store the function values
+  //To store the fibonacci function values
   let memo = [0, 1];
-
   //Function to calculate the fibonacci
   const fibonacci = (num) => {
     //Get the value for current number
@@ -57,38 +55,45 @@ function App() {
     return result;
   };
 
-  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt
+  // To check if a number is part of the fibonacci sequence the square root of 5n^2 + 4 or 5n^2 - 4 must be a whole number (not a decimal/floating point).
 
-  // The default radix for parseInt is 10 so any number will be rounded
+  // The default radix for parseInt is 10 so any number (n) will be rounded to the nearest integer.
+  // If the number has been rounded then s * s !== n and the function will return false. Else it will return true.
   const perfectSquare = (n) => {
-    console.log("this is n :", n);
     let s = parseInt(Math.sqrt(n));
-    console.log("This is s", s);
     return s * s === n;
   };
 
+  // fibCheck will return true if the user inputs a number a number equal to or less than the 1000th fibonacci number.
   const fibCheck = (n) => {
     if (n <= fibonacci(fibRange)) {
       return perfectSquare(5 * n * n + 4) || perfectSquare(5 * n * n - 4);
     }
   };
 
-  // https://stackoverflow.com/questions/62900377/why-is-react-setstate-hook-not-updating-immediately
   const handleChangeArray = (e) => {
+    // stop form submission because it will refresh the page
     e.preventDefault();
+
+    // get user input
     let userNum = document.getElementById("userNum").value;
 
+    // remove leading 0's. Prevents 00012 as a value and converts it to 12.
     if (userNum !== "0") {
       userNum = userNum.replace(/\b0+/g, "");
     }
-
     if (userNum !== "") {
+      // add input values into an array of all user numbers
       setUserArray([...userArray, userNum]);
+
+      // returns true is user number is part of the fibonacci sequence
       if (fibCheck(Number(userNum))) {
+        // makes FIB = a string and this will display on the page
         setAlerts({
           error: "",
           FIB: "FIB",
         });
+        // after .5 seconds this will set FIB back to blank so that the "FIB" alert doesnt stay on the screen
         setTimeout(() => {
           setAlerts({
             error: "",
@@ -103,55 +108,70 @@ function App() {
       }
     } else {
       setAlerts({
+        // handles blank submission
         error: "No number added",
         FIB: "",
       });
     }
+    // resets input field back to no content
     document.getElementById("userNum").value = "";
   };
 
   const handleTime = (e) => {
+    // stop form submission because it will refresh the page
     e.preventDefault();
+
+    // get user time input
     let time = document.getElementById("time").value;
+
+    //  regex that does not allow negative or decimals
     const validate = /^\d+$/;
+
+    // removes leading 0's
     time = time.replace(/\b0+/g, "");
+
+    //  checks if input is a number, does not allow negative or decimals
     if (validate.test(time)) {
+      // keeps track of the refresh time
       setRefreshTimer(time);
+
+      // changes value of this varable to trigger the useEffect again
       setUpdateTime(!updateTime);
+
+      // keeps track game status. true = playing false = game over
       setGameStart(true);
+
+      // this variale is passed to the timer component to turn timer on/off. Used for stop start functionality.
       setTimerOn(true);
+
+      // clears alerts
       setAlerts({
         error: "",
         FIB: "",
       });
     } else {
+      // error handling
       setAlerts({
         ...alerts,
         error: "must enter a positive whole number",
       });
+      // resets input field back to no content
       document.getElementById("time").value = "";
     }
+    // resets input field back to no content
     document.getElementById("time").value = "";
   };
 
+  //
   const count = () => {
-    // https://thewebdev.info/2021/05/15/how-to-count-duplicate-values-in-an-array-in-javascript/
-
     const counts = {};
     userArray.forEach((x) => {
       counts[x] = (counts[x] || 0) + 1;
     });
     setcountUnique(counts);
   };
-
   // DISPLAY THEM
-  // https://www.pluralsight.com/guides/how-to-display-key-and-value-pairs-from-json-in-reactjs
 
-  // SORTING THEM FROM OBJECT
-  // https://stackoverflow.com/questions/1069666/sorting-object-property-by-values
-
-  // The ONE I USED
-  // https://stackoverflow.com/questions/43773092/how-to-sort-objects-by-value
   const displayResults = () =>
     Object.keys(countUnique)
       .sort((a, b) => {
